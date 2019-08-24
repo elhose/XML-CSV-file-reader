@@ -5,16 +5,23 @@ import database.Person;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-public class CSVReader implements  FileCheck, HandleContactType {
+public class ReaderCSV implements FileCheck, HandleContactType {
 
     // == fields
     private String filePath;
     private Person person;
+    private List<Person> persons = new ArrayList<>();
+
+    public List<Person> getPersons() {
+        return persons;
+    }
 
     // == constructors
-    public CSVReader(String filePath) {
+    public ReaderCSV(String filePath) {
         this.filePath = filePath;
     }
 
@@ -48,10 +55,11 @@ public class CSVReader implements  FileCheck, HandleContactType {
                 person.setAge(age);
                 person.setCity(city);
 
-                for (int i=4;i<array.length;i++){
-                    person.getContacts().add(new Contact(array[i],handleContact(array[i])));
+                for (int i = 4; i < array.length; i++) {
+                    person.getContacts().add(new Contact(array[i], handleContact(array[i])));
                 }
 
+                persons.add(person);
                 System.out.println(person.toString());
             }
             // note that Scanner suppresses exceptions
@@ -67,17 +75,16 @@ public class CSVReader implements  FileCheck, HandleContactType {
     @Override
     public int handleContact(String contactType) {
 
-        if (contactType.matches("^\\w+\\@\\w+\\.\\w+$")){
+        if (contactType.matches("^\\w+\\@\\w+\\.\\w+$")) {
             return 1;
-        } else if (contactType.matches("(^\\d{9}$|^\\d{3}.\\d{3}.\\d{3}$)")){
+        } else if (contactType.matches("(^\\d{9}$|^\\d{3}.\\d{3}.\\d{3}$)")) {
             return 2;
-        }else if (contactType.matches("^jbr:\\w+\\@\\w+\\.\\w+$")){
+        } else if (contactType.matches("^jbr:\\w+\\@\\w+\\.\\w+$")) {
             return 3;
-        }else {
+        } else {
             return 0;
         }
     }
-
 
 
 }

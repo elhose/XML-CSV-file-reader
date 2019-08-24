@@ -1,2 +1,5 @@
 /.idea/
 /reader/target/
+/bazaDanych.db
+/database_location/bazaDanych.db
+/bazaDanych.db-journal

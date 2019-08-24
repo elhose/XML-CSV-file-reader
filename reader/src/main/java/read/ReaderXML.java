@@ -8,13 +8,13 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.*;
 
-public class XMLReader implements FileCheck{
+public class ReaderXML implements FileCheck{
 
     // == fields
     private String filePath;
 
     // == constructors
-    public XMLReader(String filePath) {
+    public ReaderXML(String filePath) {
         this.filePath = filePath;
     }
 

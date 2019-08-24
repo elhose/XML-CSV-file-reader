@@ -39,7 +39,11 @@ public class Person {
     }
 
     public void setAge(String age) {
-        this.age = age;
+        if (age.equals("")){
+            this.age = null;
+        }else {
+            this.age = age;
+        }
     }
 
     public String getCity() {

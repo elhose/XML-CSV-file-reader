@@ -15,17 +15,10 @@ public class Contact {
         return contactString;
     }
 
-    public void setContactString(String contactString) {
-        this.contactString = contactString;
-    }
-
     public int getValue() {
         return value;
     }
 
-    public void setValue(int value) {
-        this.value = value;
-    }
 
     @Override
     public boolean equals(Object o) {

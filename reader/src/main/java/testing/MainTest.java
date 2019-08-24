@@ -1,8 +1,9 @@
 package testing;
 
-import read.CSVReader;
+import database.ConnectMain;
 import read.FileCheck;
-import read.XMLReader;
+import read.ReaderCSV;
+import read.ReaderXML;
 
 public class MainTest {
 
@@ -18,15 +19,18 @@ public class MainTest {
         System.out.println("WYBRAŁEŚ:   " + path);
 
         if (FileCheck.checkFileExtension(path).equalsIgnoreCase("csv")){
-            CSVReader csvReader = new CSVReader(path);
-            csvReader.readCSV();
+            ReaderCSV readerCsv = new ReaderCSV(path);
+            readerCsv.readCSV();
+            ConnectMain.insertPerson(readerCsv.getPersons());
+
         }else if (FileCheck.checkFileExtension(path).equalsIgnoreCase("xml")){
-            XMLReader xmlReader = new XMLReader(path);
-            xmlReader.readXML();
+            ReaderXML readerXML = new ReaderXML(path);
+            readerXML.readXML();
 
         }else {
             System.out.println("File extension is not valid. Try changing path.");
         }
+
     }
 
 }
