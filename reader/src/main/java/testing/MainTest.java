@@ -11,11 +11,12 @@ public class MainTest {
         String pathXML = "C:\\Users\\Jacek\\Desktop\\dane.xml";
 
         String path = pathCSV;
+
         System.out.println("podaj ścieżkę do pliku:");
         System.out.println("pdoaj ścieżkę do bazy danych lub wpisz utwórz");
 
-
         System.out.println("WYBRAŁEŚ:   " + path);
+
         if (FileCheck.checkFileExtension(path).equalsIgnoreCase("csv")){
             CSVReader csvReader = new CSVReader(path);
             csvReader.readCSV();
