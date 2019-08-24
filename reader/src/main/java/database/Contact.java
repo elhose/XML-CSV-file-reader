@@ -1,10 +1,10 @@
-package read;
+package database;
 
 import java.util.Objects;
 
 public class Contact {
-    String contactString;
-    int value;
+    private String contactString;
+    private int value;
 
     public Contact(String contactString, int value) {
         this.contactString = contactString;
@@ -39,5 +39,13 @@ public class Contact {
     @Override
     public int hashCode() {
         return Objects.hash(contactString, value);
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "contactString='" + contactString + '\'' +
+                ", value=" + value +
+                '}';
     }
 }
