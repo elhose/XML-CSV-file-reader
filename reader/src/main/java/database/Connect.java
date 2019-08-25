@@ -12,15 +12,15 @@ import java.util.Scanner;
 public class Connect {
     private static String url = "jdbc:sqlite:";
 
-    public static String getUrl() {
+    private static String getUrl() {
         return url;
     }
 
-    public static void setUrl(String url) {
+    private static void setUrl(String url) {
         Connect.url = url;
     }
 
-    public static void createNewDatabaseWithTables(String nameOfDatabase) {
+    private static void createNewDatabaseWithTables(String nameOfDatabase) {
 
         String connectionURl = url.concat(nameOfDatabase + ".db");
         setUrl(connectionURl);
@@ -30,12 +30,12 @@ public class Connect {
 
         try (Connection conn = DriverManager.getConnection(connectionURl);
              Statement statement = conn.createStatement()) {
-            if (conn != null) {
+
                 //customers TABLE
                 statement.execute(CREATE_CUSTOMERS_TABLE);
                 //CONTACTS table
                 statement.execute(CREATE_CONTACTS_TABLE);
-            }
+
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -43,7 +43,7 @@ public class Connect {
         }
     }
 
-    public static void insertPerson(List<Person> persons) {
+    private static void insertPerson(List<Person> persons) {
 
         String CUSTOMER_STATEMENT = "INSERT INTO customers (NAME, SURNAME, AGE) VALUES(?,?,?)";
         String CONTACTS_STATEMENT = "INSERT INTO contacts (ID_CUSTOMER, TYPE, CONTACT) VALUES(?,?,?)";

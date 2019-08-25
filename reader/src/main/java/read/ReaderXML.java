@@ -8,9 +8,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-public class ReaderXML implements FileCheck{
+public class ReaderXML implements FileCheck {
 
     // == fields
     private String filePath;
@@ -30,34 +31,31 @@ public class ReaderXML implements FileCheck{
         this.filePath = filePath;
     }
 
-    public List<Person> getListPersons(){
+    public List<Person> getListPersons() {
         return handlerXML.getPersons();
     }
 
-    public void readXML(){
+    public void readXML() {
 
-        try{
+        try {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
 
             handlerXML = new HandlerXML();
 
             File file = new File(filePath);
-            InputStream inputStream= new FileInputStream(file);
-            Reader reader = new InputStreamReader(inputStream,"UTF-8");
+            InputStream inputStream = new FileInputStream(file);
+            Reader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
 
             InputSource is = new InputSource(reader);
             is.setEncoding("UTF-8");
 
             saxParser.parse(is, handlerXML);
 
-        }catch (SAXException | ParserConfigurationException |  IOException e){
+        } catch (SAXException | ParserConfigurationException | IOException e) {
             e.printStackTrace();
         }
 
     }
-
-
-
 
 }
