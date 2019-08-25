@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Connect {
-    private static int counts = 1;
     private static String url = "jdbc:sqlite:";
 
     public static String getUrl() {
@@ -26,13 +25,16 @@ public class Connect {
         String connectionURl = url.concat(nameOfDatabase + ".db");
         setUrl(connectionURl);
 
+        String CREATE_CUSTOMERS_TABLE = "CREATE TABLE IF NOT EXISTS customers(ID INTEGER , NAME TEXT NOT NULL, SURNAME TEXT NOT NULL, AGE INTEGER, PRIMARY KEY (ID))";
+        String CREATE_CONTACTS_TABLE = "CREATE TABLE IF NOT EXISTS contacts(ID INTEGER , ID_CUSTOMER INTEGER, TYPE INTEGER NOT NULL, CONTACT STRING, PRIMARY KEY (ID), FOREIGN KEY (ID_CUSTOMER) REFERENCES customers(ID))";
+
         try (Connection conn = DriverManager.getConnection(connectionURl);
              Statement statement = conn.createStatement()) {
             if (conn != null) {
                 //customers TABLE
-                statement.execute("CREATE TABLE IF NOT EXISTS customers(ID INTEGER PRIMARY KEY, NAME TEXT NOT NULL, SURNAME TEXT NOT NULL, AGE INTEGER)");
+                statement.execute(CREATE_CUSTOMERS_TABLE);
                 //CONTACTS table
-                statement.execute("CREATE TABLE IF NOT EXISTS contacts(ID INTEGER PRIMARY KEY, ID_CUSTOMER INTEGER, TYPE INTEGER NOT NULL, CONTACT STRING)");
+                statement.execute(CREATE_CONTACTS_TABLE);
             }
 
         } catch (SQLException e) {
@@ -43,12 +45,12 @@ public class Connect {
 
     public static void insertPerson(List<Person> persons) {
 
-        String customersStatement = "INSERT INTO customers (NAME, SURNAME, AGE) VALUES(?,?,?)";
-        String contactsStatement = "INSERT INTO contacts (ID_CUSTOMER, TYPE, CONTACT) VALUES(?,?,?)";
+        String CUSTOMER_STATEMENT = "INSERT INTO customers (NAME, SURNAME, AGE) VALUES(?,?,?)";
+        String CONTACTS_STATEMENT = "INSERT INTO contacts (ID_CUSTOMER, TYPE, CONTACT) VALUES(?,?,?)";
 
         try (Connection connection = DriverManager.getConnection(getUrl());
-             PreparedStatement preparedCustomer = connection.prepareStatement(customersStatement, Statement.RETURN_GENERATED_KEYS);
-             PreparedStatement preparedContact = connection.prepareStatement(contactsStatement)) {
+             PreparedStatement preparedCustomer = connection.prepareStatement(CUSTOMER_STATEMENT, Statement.RETURN_GENERATED_KEYS);
+             PreparedStatement preparedContact = connection.prepareStatement(CONTACTS_STATEMENT)) {
 
             connection.setAutoCommit(false);
 
@@ -56,27 +58,39 @@ public class Connect {
                 preparedCustomer.setString(1, person.getName());
                 preparedCustomer.setString(2, person.getSurname());
                 preparedCustomer.setString(3, person.getAge());
-                preparedCustomer.execute();
+                preparedCustomer.executeUpdate();
 
-                for (int i = 0; i < person.getContacts().size(); i++) {
-                    preparedContact.setInt(1, counts);
-                    preparedContact.setInt(2, person.getContacts().get(i).getValue());
-                    preparedContact.setString(3, person.getContacts().get(i).getContactString());
-                    preparedContact.execute();
+                ResultSet rs = preparedCustomer.getGeneratedKeys();
+                int ID_CUSTOMER = 0;
+
+                if (rs.next()){
+                    ID_CUSTOMER = rs.getInt(1);
                 }
 
-                System.out.println("Inserting record number " + counts++);
+                for (int i = 0; i < person.getContacts().size(); i++) {
+
+
+                    preparedContact.setInt(1, ID_CUSTOMER);
+                    preparedContact.setInt(2, person.getContacts().get(i).getValue());
+                    preparedContact.setString(3, person.getContacts().get(i).getContactString());
+                    preparedContact.executeUpdate();
+                }
+
+                System.out.println("Inserting record number: " + ID_CUSTOMER);
             }
 
             connection.commit();
 
         } catch (SQLException e) {
             e.printStackTrace();
+
         }
 
     }
 
     public static void runReader() {
+        long startTime;
+        long endTime;
         while (true) {
 
             Scanner scanner = new Scanner(System.in);
@@ -89,6 +103,8 @@ public class Connect {
 
                 System.out.println("Enter name of Database:");
                 String databaseName = scanner.nextLine();
+
+                startTime = System.nanoTime();
 
                 Connect.createNewDatabaseWithTables(databaseName);
 
@@ -108,6 +124,9 @@ public class Connect {
             }
 
         }
+
+        endTime = System.nanoTime();
+        System.out.println("Time of Execution in ms: " + (endTime-startTime)/1000000);
 
     }
 
