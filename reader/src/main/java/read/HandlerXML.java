@@ -6,6 +6,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HandlerXML extends DefaultHandler implements HandleContactType {
 
    private Person person;
@@ -15,10 +18,14 @@ public class HandlerXML extends DefaultHandler implements HandleContactType {
    private boolean cityMarker;
    private boolean contactMarker;
    private String contactType;
+   private List<Person> persons = new ArrayList<>();
+
+    public List<Person> getPersons() {
+        return persons;
+    }
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-//        System.out.println("Start Element :" + qName);
 
         if (qName.equalsIgnoreCase("person")){
             this.person = new Person();
@@ -49,45 +56,37 @@ public class HandlerXML extends DefaultHandler implements HandleContactType {
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-//        System.out.println("End Element :" + qName);
 
         if (qName.equalsIgnoreCase("person")){
-            System.out.println(this.person.toString());
-//            this.person = null;
+//            System.out.println(this.person.toString());
+            persons.add(this.person);
         }
     }
 
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
-//        System.out.println(new String(ch, start, length));
-
 
         if (nameMarker) {
-//            System.out.println("name : " + new String(ch, start, length));
             nameMarker = false;
             person.setName(new String(ch, start, length));
         }
 
         if (surnameMarker) {
-//            System.out.println("surname : " + new String(ch, start, length));
             surnameMarker = false;
             person.setSurname(new String(ch, start, length));
         }
 
         if (ageMarker) {
-//            System.out.println("age : " + new String(ch, start, length));
             ageMarker = false;
             person.setAge(new String(ch, start, length));
         }
 
         if (cityMarker) {
-//            System.out.println("city : " + new String(ch, start, length));
             cityMarker = false;
             person.setCity(new String(ch, start, length));
         }
 
         if (contactMarker) {
-//            System.out.println("city : " + new String(ch, start, length));
             contactMarker = false;
             person.getContacts().add(new Contact(new String(ch, start, length), handleContact(contactType)));
         }

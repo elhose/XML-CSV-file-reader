@@ -1,5 +1,6 @@
 package read;
 
+import database.Person;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -7,11 +8,13 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.*;
+import java.util.List;
 
 public class ReaderXML implements FileCheck{
 
     // == fields
     private String filePath;
+    private HandlerXML handlerXML;
 
     // == constructors
     public ReaderXML(String filePath) {
@@ -27,13 +30,17 @@ public class ReaderXML implements FileCheck{
         this.filePath = filePath;
     }
 
+    public List<Person> getListPersons(){
+        return handlerXML.getPersons();
+    }
+
     public void readXML(){
 
         try{
             SAXParserFactory factory = SAXParserFactory.newInstance();
             SAXParser saxParser = factory.newSAXParser();
 
-            HandlerXML handlerXML = new HandlerXML();
+            handlerXML = new HandlerXML();
 
             File file = new File(filePath);
             InputStream inputStream= new FileInputStream(file);

@@ -60,7 +60,7 @@ public class ReaderCSV implements FileCheck, HandleContactType {
                 }
 
                 persons.add(person);
-                System.out.println(person.toString());
+//                System.out.println(person.toString());
             }
             // note that Scanner suppresses exceptions
             if (scanner.ioException() != null) {
