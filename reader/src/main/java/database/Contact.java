@@ -1,25 +1,23 @@
 package database;
 
+import lombok.Getter;
+
 import java.util.Objects;
 
+@Getter
 public class Contact {
+
+    // == fields
     private String contactString;
     private int value;
 
+    // == constructors
     public Contact(String contactString, int value) {
         this.contactString = contactString;
         this.value = value;
     }
 
-    public String getContactString() {
-        return contactString;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-
+    // == public methods
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -34,11 +32,4 @@ public class Contact {
         return Objects.hash(contactString, value);
     }
 
-    @Override
-    public String toString() {
-        return "Contact{" +
-                "contactString='" + contactString + '\'' +
-                ", value=" + value +
-                '}';
-    }
 }
