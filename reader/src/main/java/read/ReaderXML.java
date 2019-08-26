@@ -23,13 +23,6 @@ public class ReaderXML implements FileCheck {
     }
 
     // == public methods
-    public String getFilePath() {
-        return filePath;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
 
     public List<Person> getListPersons() {
         return handlerXML.getPersons();

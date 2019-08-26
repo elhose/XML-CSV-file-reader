@@ -1,5 +1,8 @@
 package database;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import read.FileCheck;
 import read.ReaderCSV;
 import read.ReaderXML;
@@ -8,17 +11,12 @@ import java.io.File;
 import java.sql.*;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class Connect {
+
+    @Getter @Setter
     private static String url = "jdbc:sqlite:";
-
-    private static String getUrl() {
-        return url;
-    }
-
-    private static void setUrl(String url) {
-        Connect.url = url;
-    }
 
     private static void createNewDatabaseWithTables(String nameOfDatabase) {
 
@@ -77,6 +75,7 @@ public class Connect {
                 }
 
                 System.out.println("Inserting record number: " + ID_CUSTOMER);
+
             }
 
             connection.commit();
@@ -121,6 +120,7 @@ public class Connect {
                 }
             } else {
                 System.out.println("Wrong path to file. It must be full (with name and extension of file).");
+
             }
 
         }

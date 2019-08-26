@@ -2,6 +2,7 @@ package read;
 
 import database.Contact;
 import database.Person;
+import lombok.Getter;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,11 +15,7 @@ public class ReaderCSV implements FileCheck, HandleContactType {
     // == fields
     private String filePath;
     private Person person;
-    private List<Person> persons = new ArrayList<>();
-
-    public List<Person> getPersons() {
-        return persons;
-    }
+    @Getter private List<Person> persons = new ArrayList<>();
 
     // == constructors
     public ReaderCSV(String filePath) {
@@ -26,13 +23,6 @@ public class ReaderCSV implements FileCheck, HandleContactType {
     }
 
     // == public methods
-    public String getFilePath() {
-        return filePath;
-    }
-
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
 
     public void readCSV() {
 
@@ -60,7 +50,6 @@ public class ReaderCSV implements FileCheck, HandleContactType {
                 }
 
                 persons.add(person);
-//                System.out.println(person.toString());
             }
             // note that Scanner suppresses exceptions
             if (scanner.ioException() != null) {
