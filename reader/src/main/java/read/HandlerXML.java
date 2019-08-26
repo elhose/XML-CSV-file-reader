@@ -21,10 +21,8 @@ public class HandlerXML extends DefaultHandler implements HandleContactType {
    private boolean contactMarker;
    private String contactType;
 
-<<<<<<< HEAD
+
    // == public methods
-=======
->>>>>>> 88d730c01a7e48410192b1590acb030b7838e0d9
    @Getter
    private List<Person> persons = new ArrayList<>();
 

@@ -15,10 +15,8 @@ import java.util.logging.Logger;
 
 public class Connect {
 
-<<<<<<< HEAD
     // == fields
-=======
->>>>>>> 88d730c01a7e48410192b1590acb030b7838e0d9
+
     @Getter @Setter
     private static String url = "jdbc:sqlite:";
 

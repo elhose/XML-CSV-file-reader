@@ -17,10 +17,8 @@ public class Contact {
         this.value = value;
     }
 
-<<<<<<< HEAD
+
     // == public methods
-=======
->>>>>>> 88d730c01a7e48410192b1590acb030b7838e0d9
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
