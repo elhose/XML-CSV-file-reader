@@ -23,6 +23,10 @@ public class ReaderCSV implements FileCheck, HandleContactType {
     }
 
     // == public methods
+<<<<<<< HEAD
+=======
+
+>>>>>>> 88d730c01a7e48410192b1590acb030b7838e0d9
     public void readCSV() {
 
         try (FileInputStream inputStream = new FileInputStream(this.filePath);
