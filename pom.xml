@@ -16,7 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <sqlite.version>3.28.0</sqlite.version>
+        <sqlite.version>3.41.2.2</sqlite.version>
         <lombok.version>1.18.8</lombok.version>
     </properties>
 
